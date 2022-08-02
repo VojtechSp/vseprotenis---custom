@@ -132,9 +132,9 @@ def ulozit_jako_csv(data: dict, vystupni_soubor: str) -> None:
     mode = "w" if vystupni_soubor not in os.listdir() else "a"
     now = datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+    a_string = posledni_aktualizace()
     with open(vystupni_soubor, mode, newline="") as csv_file:
-        #keys = data[0].keys()
-        keys = ["CŽ","Jméno","Body z 8 nej Dvouhry","Body z 8 nej Čtyřhry","Body celkem","BH","rCŽ",dt_string]
+        keys = ["CŽ","Jméno","Body z 8 nej Dvouhry","Body z 8 nej Čtyřhry","Body celkem","BH","rCŽ",dt_string,"posledni aktualizace: " + a_string]
         dict_writer = csv.DictWriter(csv_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(data)
@@ -143,7 +143,6 @@ def ulozit_jako_csv(data: dict, vystupni_soubor: str) -> None:
 
 def z_listu_na_dict(data):
     main_list = []
-    #print(data)
     for list in data:
         keys = ["CŽ", "Jméno", "Body z 8 nej Dvouhry", "Body z 8 nej Čtyřhry", "Body celkem", "BH", "rCŽ"]
         dictionary = dict()
@@ -156,6 +155,13 @@ def z_listu_na_dict(data):
         dictionary[keys[6]] = list.pop(0)
         main_list.append(dictionary)
     return main_list
+
+
+def posledni_aktualizace():
+    odkaz = "http://vseprotenis.com/zebricky?kategorie=dorostenky&start=0"
+    soup = ziskat_HTML_stranky(odkaz)
+    aktualizace = soup.span.string
+    return aktualizace
 
 
 
