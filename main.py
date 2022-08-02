@@ -134,7 +134,7 @@ def ulozit_jako_csv(data: dict, vystupni_soubor: str) -> None:
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     a_string = posledni_aktualizace()
     with open(vystupni_soubor, mode, newline="") as csv_file:
-        keys = ["CŽ","Jméno","Body z 8 nej Dvouhry","Body z 8 nej Čtyřhry","Body celkem","BH","rCŽ",dt_string,"posledni aktualizace: " + a_string]
+        keys = ["CŽ","Jméno","Body z 8 nej Dvouhry","Body z 8 nej Čtyřhry","Body celkem","BH","rCŽ",dt_string,"poslední aktualizace: " + a_string]
         dict_writer = csv.DictWriter(csv_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(data)
